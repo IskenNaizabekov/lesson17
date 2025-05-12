@@ -82,3 +82,70 @@ resetBtn.addEventListener('click', () => {
     seconds = 0;
     updateDisplay();
 });
+
+
+
+
+
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '../data/characters.json', true);
+
+xhr.onload = () => {
+    if (xhr.status === 200) {
+        const characters = JSON.parse(xhr.responseText);
+        const list = document.querySelector('.characters-list');
+
+        characters.forEach(character => {
+            const card = document.createElement('div');
+            card.className = 'character-card';
+
+            card.innerHTML = `
+        <div class="character-photo">
+          <img src="${character.image}" alt="${character.name}">
+        </div>
+        <h3>${character.name}</h3>
+        <p>House: ${character.house}</p>
+      `;
+
+            list.appendChild(card);
+        });
+    } else {
+        console.error('Ошибка загрузки characters.json');
+    }
+};
+
+xhr.send();
+
+
+
+let request = new XMLHttpRequest();
+request.open('GET', '../data/any.json', true);
+request.responseType = 'json';
+
+request.onload = function() {
+    if (request.status === 200) {
+        console.log(request.response);
+    } else {
+        console.log('Ошибка загрузки файла: ' + request.status);
+    }
+};
+
+request.onerror = function() {
+    console.log('Сетевая ошибка');
+};
+
+request.send();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
